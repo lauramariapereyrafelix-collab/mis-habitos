@@ -1,14 +1,376 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Mis Hábitos</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Mis Hábitos</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Serif Display', Georgia, serif; min-height: 100vh; background: #0f0f0f; color: #f0ebe1; padding-bottom: 80px; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: #333; }
+    .header { padding: 28px 24px 0; max-width: 520px; margin: 0 auto; }
+    .title-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+    h1 { font-size: 26px; font-style: italic; letter-spacing: -0.02em; }
+    .subtitle { font-size: 12px; color: #555; font-family: 'DM Sans', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+    .nav { display: flex; gap: 6px; background: #161616; border: 1px solid #222; border-radius: 100px; padding: 4px; margin-bottom: 28px; width: fit-content; }
+    .nav-btn { background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border-radius: 100px; transition: all 0.2s; color: #888; }
+    .nav-btn.active { background: #f0ebe1; color: #0f0f0f; }
+    .nav-btn:hover:not(.active) { color: #f0ebe1; }
+    .content { max-width: 520px; margin: 0 auto; padding: 0 24px; }
+    .view { display: none; flex-direction: column; gap: 20px; }
+    .view.active { display: flex; }
+    .card { background: #161616; border: 1px solid #222; border-radius: 16px; padding: 20px; }
+    .card-label { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #666; margin-bottom: 14px; letter-spacing: 0.04em; }
+    .good-day-row { display: flex; gap: 10px; }
+    .good-day-btn { border: 1.5px solid #2a2a2a; background: none; cursor: pointer; border-radius: 14px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #888; transition: all 0.18s; }
+    .good-day-btn.sel-yes { border-color: #4ade80; background: rgba(74,222,128,0.1); color: #4ade80; }
+    .good-day-btn.sel-no { border-color: #f87171; background: rgba(248,113,113,0.1); color: #f87171; }
+    .habit-label { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #aaa; margin-bottom: 12px; }
+    .options-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .option-btn { border: 1.5px solid #2a2a2a; background: none; cursor: pointer; border-radius: 10px; padding: 10px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #888; transition: all 0.18s; }
+    .option-btn:hover { border-color: #555; color: #f0ebe1; }
+    .option-btn.sel-0 { border-color: #4ade80; background: rgba(74,222,128,0.08); color: #4ade80; }
+    .option-btn.sel-1 { border-color: #fbbf24; background: rgba(251,191,36,0.08); color: #fbbf24; }
+    .option-btn.sel-2 { border-color: #f87171; background: rgba(248,113,113,0.08); color: #f87171; }
+    .note-label { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #666; margin-bottom: 10px; letter-spacing: 0.04em; }
+    textarea { background: #161616; border: 1.5px solid #2a2a2a; border-radius: 12px; color: #f0ebe1; font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 14px; resize: none; outline: none; width: 100%; transition: border-color 0.2s; }
+    textarea:focus { border-color: #444; }
+    textarea::placeholder { color: #444; }
+    .save-btn { background: #f0ebe1; color: #0f0f0f; border: none; cursor: pointer; border-radius: 100px; padding: 13px 36px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; transition: all 0.2s; width: fit-content; }
+    .save-btn:hover { background: #fff; transform: translateY(-1px); }
+    .save-btn.saved { background: #4ade80; }
+    .day-header { margin-bottom: 4px; }
+    .day-date { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #555; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+    .day-title { font-size: 22px; font-style: italic; }
+    /* Calendar */
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .cal-nav { background: none; border: none; color: #888; cursor: pointer; font-size: 20px; padding: 4px 10px; }
+    .cal-month { font-style: italic; font-size: 18px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-day-name { text-align: center; font-size: 11px; color: #444; font-family: 'DM Sans', sans-serif; letter-spacing: 0.06em; padding: 4px 0; }
+    .cal-day { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #555; transition: all 0.15s; border: 1px solid transparent; }
+    .cal-day:hover { color: #f0ebe1; border-color: #333; }
+    .cal-day.today { border-color: #f0ebe1; color: #f0ebe1; }
+    .cal-day.good { background: rgba(74,222,128,0.18); color: #4ade80; }
+    .cal-day.ok { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .cal-day.bad { background: rgba(248,113,113,0.15); color: #f87171; }
+    .legend { display: flex; gap: 16px; margin-top: 24px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; opacity: 0.5; }
+    /* Stats */
+    .stat-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .stat-card { background: #161616; border: 1px solid #222; border-radius: 16px; padding: 24px; flex: 1; min-width: 130px; }
+    .stat-label { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; margin-bottom: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .stat-num { font-size: 36px; font-style: italic; }
+    .progress-bar { height: 6px; background: #222; border-radius: 100px; overflow: hidden; flex: 1; }
+    .progress-fill { height: 100%; border-radius: 100px; transition: width 0.6s ease; }
+    .habit-bar { margin-bottom: 14px; }
+    .habit-bar-top { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .habit-bar-label { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #888; }
+    .habit-bar-pct { font-family: 'DM Sans', sans-serif; font-size: 12px; }
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); }
+    .modal { background: #161616; border: 1px solid #2a2a2a; border-radius: 20px; padding: 28px; max-width: 360px; width: 90%; }
+    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .modal-date { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .modal-title { font-size: 20px; font-style: italic; }
+    .modal-close { background: none; border: none; color: #555; cursor: pointer; font-size: 20px; }
+    .modal-habit { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .modal-habit-label { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #888; }
+    .modal-habit-val { font-family: 'DM Sans', sans-serif; font-size: 13px; }
+    .modal-note { margin-top: 8px; padding: 12px; background: #1e1e1e; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #aaa; line-height: 1.5; }
+    .empty-msg { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; text-align: center; margin-top: 40px; line-height: 1.7; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="title-row">
+    <h1>hábitos</h1>
+    <span class="subtitle">diario personal</span>
+  </div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="setView('today')">Hoy</button>
+    <button class="nav-btn" onclick="setView('calendar')">Calendario</button>
+    <button class="nav-btn" onclick="setView('stats')">Stats</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TODAY -->
+  <div id="view-today" class="view active">
+    <div class="day-header">
+      <div class="day-date" id="today-date"></div>
+      <div class="day-title">¿Cómo fue tu día?</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Evaluación general</div>
+      <div class="good-day-row">
+        <button class="good-day-btn" id="btn-good" onclick="setGoodDay(true)">✦ Buen día</button>
+        <button class="good-day-btn" id="btn-bad" onclick="setGoodDay(false)">Día difícil</button>
+      </div>
+    </div>
+
+    <div id="habits-container"></div>
+
+    <div>
+      <div class="note-label">📝 Notas del día</div>
+      <textarea id="note-input" rows="4" placeholder="¿Algo que quieras recordar de hoy?" oninput="saveNote(this.value)"></textarea>
+    </div>
+
+    <button class="save-btn" id="save-btn" onclick="handleSave()">Guardar día</button>
+  </div>
+
+  <!-- CALENDAR -->
+  <div id="view-calendar" class="view">
+    <div class="cal-header">
+      <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+      <div class="cal-month" id="cal-month-label"></div>
+      <button class="cal-nav" onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="legend">
+      <div style="display:flex;align-items:center;gap:6px"><div class="legend-dot" style="background:#4ade80"></div>Buen día</div>
+      <div style="display:flex;align-items:center;gap:6px"><div class="legend-dot" style="background:#fbbf24"></div>Regular</div>
+      <div style="display:flex;align-items:center;gap:6px"><div class="legend-dot" style="background:#f87171"></div>Difícil</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div id="view-stats" class="view">
+    <div class="day-title" style="font-size:22px;font-style:italic;margin-bottom:4px">Tu resumen</div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-label">Días registrados</div><div class="stat-num" id="stat-total">0</div></div>
+      <div class="stat-card"><div class="stat-label">Racha actual</div><div class="stat-num" id="stat-streak" style="color:#4ade80">0</div></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-label">Buenos días</div><div class="stat-num" id="stat-good" style="color:#4ade80">0</div></div>
+      <div class="stat-card"><div class="stat-label">Días regulares</div><div class="stat-num" id="stat-ok" style="color:#fbbf24">0</div></div>
+    </div>
+    <div class="card" id="stat-progress-card" style="display:none">
+      <div class="card-label">Porcentaje de buenos días</div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="background:linear-gradient(90deg,#4ade80,#22d3ee)"></div></div>
+        <span id="progress-pct" style="font-family:'DM Sans',sans-serif;font-size:14px;color:#4ade80;min-width:36px"></span>
+      </div>
+    </div>
+    <div class="card" id="stat-habits-card" style="display:none">
+      <div class="card-label">Promedio por hábito</div>
+      <div id="habits-bars"></div>
+    </div>
+    <div class="empty-msg" id="stats-empty">Aún no hay datos.<br>¡Registra tu primer día!</div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" style="display:none" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-date" id="modal-date"></div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const HABITS = [
+  { id: "food", label: "Alimentación", icon: "🥗", options: ["Excelente", "Regular", "Mejorable"] },
+  { id: "exercise", label: "Ejercicio", icon: "🏃", options: ["Sí, intenso", "Sí, ligero", "No hice"] },
+  { id: "water", label: "Hidratación", icon: "💧", options: ["Muy bien", "Regular", "Poca agua"] },
+  { id: "sleep", label: "Sueño", icon: "😴", options: ["+8 hrs", "6-8 hrs", "-6 hrs"] },
+  { id: "mind", label: "Bienestar mental", icon: "🧠", options: ["Tranquilo", "Normal", "Estresado"] },
+];
+const SCORE_MAP = [3, 2, 1];
+const DAY_NAMES = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+const MONTH_NAMES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const COLORS = ["#4ade80","#fbbf24","#f87171"];
+
+let data = {};
+try { data = JSON.parse(localStorage.getItem("habitData") || "{}"); } catch(e) {}
+
+const now = new Date();
+const todayKey = getDayKey(now);
+let calYear = now.getFullYear(), calMonth = now.getMonth();
+
+function getDayKey(d) { return d.toISOString().split("T")[0]; }
+function saveAll() { localStorage.setItem("habitData", JSON.stringify(data)); }
+function getEntry() { return data[todayKey] || (data[todayKey] = { habits: {}, note: "", goodDay: null }); }
+
+function getScore(entry) {
+  if (!entry) return 0;
+  return HABITS.reduce((t, h) => t + (entry.habits[h.id] !== undefined ? SCORE_MAP[entry.habits[h.id]] : 0), 0);
+}
+function getDayColor(entry) {
+  if (!entry) return null;
+  const pct = getScore(entry) / (HABITS.length * 3);
+  return pct >= 0.75 ? "good" : pct >= 0.45 ? "ok" : "bad";
+}
+
+// NAV
+function setView(v) {
+  document.querySelectorAll(".view").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(el => el.classList.remove("active"));
+  document.getElementById("view-" + v).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(el => { if (el.textContent.toLowerCase().includes(v === "today" ? "hoy" : v === "calendar" ? "cal" : "stat")) el.classList.add("active"); });
+  if (v === "calendar") renderCalendar();
+  if (v === "stats") renderStats();
+}
+document.querySelectorAll(".nav-btn").forEach((btn, i) => {
+  const views = ["today", "calendar", "stats"];
+  btn.onclick = () => {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".view").forEach(el => el.classList.remove("active"));
+    document.getElementById("view-" + views[i]).classList.add("active");
+    if (views[i] === "calendar") renderCalendar();
+    if (views[i] === "stats") renderStats();
+  };
+});
+
+// TODAY
+document.getElementById("today-date").textContent = now.toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
+
+function renderHabits() {
+  const entry = getEntry();
+  const container = document.getElementById("habits-container");
+  container.innerHTML = HABITS.map(h => `
+    <div class="card">
+      <div class="habit-label"><span style="margin-right:8px">${h.icon}</span>${h.label}</div>
+      <div class="options-row">
+        ${h.options.map((opt, idx) => `
+          <button class="option-btn ${entry.habits[h.id] === idx ? 'sel-' + idx : ''}" onclick="selectHabit('${h.id}', ${idx})">${opt}</button>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
+function selectHabit(habitId, idx) {
+  const entry = getEntry();
+  entry.habits[habitId] = idx;
+  saveAll();
+  renderHabits();
+}
+
+function setGoodDay(val) {
+  const entry = getEntry();
+  entry.goodDay = val;
+  saveAll();
+  document.getElementById("btn-good").className = "good-day-btn" + (val === true ? " sel-yes" : "");
+  document.getElementById("btn-bad").className = "good-day-btn" + (val === false ? " sel-no" : "");
+}
+
+function saveNote(val) {
+  const entry = getEntry();
+  entry.note = val;
+  saveAll();
+}
+
+function handleSave() {
+  const btn = document.getElementById("save-btn");
+  btn.textContent = "✓ Guardado";
+  btn.classList.add("saved");
+  setTimeout(() => { btn.textContent = "Guardar día"; btn.classList.remove("saved"); }, 1200);
+}
+
+// Init today
+(function initToday() {
+  const entry = getEntry();
+  if (entry.goodDay === true) { document.getElementById("btn-good").classList.add("sel-yes"); }
+  if (entry.goodDay === false) { document.getElementById("btn-bad").classList.add("sel-no"); }
+  document.getElementById("note-input").value = entry.note || "";
+  renderHabits();
+})();
+
+// CALENDAR
+function renderCalendar() {
+  document.getElementById("cal-month-label").textContent = MONTH_NAMES[calMonth] + " " + calYear;
+  const first = new Date(calYear, calMonth, 1);
+  const last = new Date(calYear, calMonth + 1, 0);
+  let html = DAY_NAMES.map(d => `<div class="cal-day-name">${d}</div>`).join("");
+  for (let i = 0; i < first.getDay(); i++) html += "<div></div>";
+  for (let d = 1; d <= last.getDate(); d++) {
+    const key = getDayKey(new Date(calYear, calMonth, d));
+    const entry = data[key];
+    const color = getDayColor(entry);
+    const isToday = key === todayKey;
+    html += `<div class="cal-day ${color || ""} ${isToday ? "today" : ""}" onclick="${entry ? `openModal('${key}')` : ''}">${d}</div>`;
+  }
+  document.getElementById("cal-grid").innerHTML = html;
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+// MODAL
+function openModal(key) {
+  const entry = data[key];
+  if (!entry) return;
+  const date = new Date(key + "T12:00:00");
+  document.getElementById("modal-date").textContent = date.toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
+  document.getElementById("modal-title").textContent = entry.goodDay === true ? "✦ Buen día" : entry.goodDay === false ? "Día difícil" : "Sin evaluar";
+  let html = HABITS.map(h => {
+    const val = entry.habits[h.id];
+    if (val === undefined) return "";
+    return `<div class="modal-habit"><span class="modal-habit-label">${h.icon} ${h.label}</span><span class="modal-habit-val" style="color:${COLORS[val]}">${h.options[val]}</span></div>`;
+  }).join("");
+  if (entry.note) html += `<div class="modal-note">${entry.note}</div>`;
+  document.getElementById("modal-body").innerHTML = html;
+  document.getElementById("modal").style.display = "flex";
+}
+function closeModal() { document.getElementById("modal").style.display = "none"; }
+
+// STATS
+function renderStats() {
+  const entries = Object.entries(data);
+  const good = entries.filter(([,e]) => getDayColor(e) === "good").length;
+  const ok = entries.filter(([,e]) => getDayColor(e) === "ok").length;
+  document.getElementById("stat-total").textContent = entries.length;
+  document.getElementById("stat-good").textContent = good;
+  document.getElementById("stat-ok").textContent = ok;
+
+  let streak = 0;
+  const sorted = Object.keys(data).sort().reverse();
+  for (const key of sorted) { if (getDayColor(data[key])) streak++; else break; }
+  document.getElementById("stat-streak").textContent = streak;
+
+  const empty = document.getElementById("stats-empty");
+  const progressCard = document.getElementById("stat-progress-card");
+  const habitsCard = document.getElementById("stat-habits-card");
+
+  if (entries.length === 0) {
+    empty.style.display = "block"; progressCard.style.display = "none"; habitsCard.style.display = "none"; return;
+  }
+  empty.style.display = "none"; progressCard.style.display = "block"; habitsCard.style.display = "block";
+
+  const pct = Math.round(good / entries.length * 100);
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("progress-pct").textContent = pct + "%";
+
+  document.getElementById("habits-bars").innerHTML = HABITS.map(h => {
+    const vals = entries.map(([,e]) => e.habits[h.id]).filter(v => v !== undefined);
+    const avg = vals.length ? vals.reduce((a,b) => a + SCORE_MAP[b], 0) / vals.length / 3 : 0;
+    const p = Math.round(avg * 100);
+    const col = avg > 0.66 ? "#4ade80" : avg > 0.33 ? "#fbbf24" : "#f87171";
+    return `<div class="habit-bar">
+      <div class="habit-bar-top"><span class="habit-bar-label">${h.icon} ${h.label}</span><span class="habit-bar-pct" style="color:${col}">${p}%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${p}%;background:${col}"></div></div>
+    </div>`;
+  }).join("");
+}
+</script>
+</body>
 </html>
