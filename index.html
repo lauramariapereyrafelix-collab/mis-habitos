@@ -15,8 +15,8 @@
     .title-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
     h1 { font-size: 26px; font-style: italic; letter-spacing: -0.02em; }
     .subtitle { font-size: 12px; color: #555; font-family: 'DM Sans', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
-    .nav { display: flex; gap: 6px; background: #161616; border: 1px solid #222; border-radius: 100px; padding: 4px; margin-bottom: 28px; width: fit-content; }
-    .nav-btn { background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border-radius: 100px; transition: all 0.2s; color: #888; }
+    .nav { display: flex; gap: 4px; background: #161616; border: 1px solid #222; border-radius: 100px; padding: 4px; margin-bottom: 28px; width: fit-content; }
+    .nav-btn { background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 8px 14px; border-radius: 100px; transition: all 0.2s; color: #888; }
     .nav-btn.active { background: #f0ebe1; color: #0f0f0f; }
     .nav-btn:hover:not(.active) { color: #f0ebe1; }
     .content { max-width: 520px; margin: 0 auto; padding: 0 24px; }
@@ -39,6 +39,9 @@
     textarea { background: #161616; border: 1.5px solid #2a2a2a; border-radius: 12px; color: #f0ebe1; font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 14px; resize: none; outline: none; width: 100%; transition: border-color 0.2s; }
     textarea:focus { border-color: #444; }
     textarea::placeholder { color: #444; }
+    input[type="text"], input[type="number"] { background: #161616; border: 1.5px solid #2a2a2a; border-radius: 12px; color: #f0ebe1; font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 12px 14px; outline: none; width: 100%; transition: border-color 0.2s; }
+    input[type="text"]:focus, input[type="number"]:focus { border-color: #444; }
+    input::placeholder { color: #444; }
     .save-btn { background: #f0ebe1; color: #0f0f0f; border: none; cursor: pointer; border-radius: 100px; padding: 13px 36px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; transition: all 0.2s; width: fit-content; }
     .save-btn:hover { background: #fff; transform: translateY(-1px); }
     .save-btn.saved { background: #4ade80; }
@@ -57,7 +60,7 @@
     .cal-day.good { background: rgba(74,222,128,0.18); color: #4ade80; }
     .cal-day.ok { background: rgba(251,191,36,0.15); color: #fbbf24; }
     .cal-day.bad { background: rgba(248,113,113,0.15); color: #f87171; }
-    .legend { display: flex; gap: 16px; margin-top: 24px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; }
+    .legend { display: flex; gap: 16px; margin-top: 24px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; flex-wrap: wrap; }
     .legend-dot { width: 10px; height: 10px; border-radius: 3px; opacity: 0.5; }
     /* Stats */
     .stat-row { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -72,7 +75,7 @@
     .habit-bar-pct { font-family: 'DM Sans', sans-serif; font-size: 12px; }
     /* Modal */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); }
-    .modal { background: #161616; border: 1px solid #2a2a2a; border-radius: 20px; padding: 28px; max-width: 360px; width: 90%; }
+    .modal { background: #161616; border: 1px solid #2a2a2a; border-radius: 20px; padding: 28px; max-width: 360px; width: 90%; max-height: 80vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
     .modal-date { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
     .modal-title { font-size: 20px; font-style: italic; }
@@ -82,6 +85,34 @@
     .modal-habit-val { font-family: 'DM Sans', sans-serif; font-size: 13px; }
     .modal-note { margin-top: 8px; padding: 12px; background: #1e1e1e; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #aaa; line-height: 1.5; }
     .empty-msg { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; text-align: center; margin-top: 40px; line-height: 1.7; }
+    /* Shopping */
+    .shop-add-row { display: flex; gap: 10px; align-items: flex-end; }
+    .shop-add-row > div { flex: 1; }
+    .field-label { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; margin-bottom: 6px; letter-spacing: 0.04em; }
+    .add-btn { background: none; border: 1.5px solid #f0ebe1; color: #f0ebe1; cursor: pointer; border-radius: 10px; padding: 12px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; white-space: nowrap; transition: all 0.18s; }
+    .add-btn:hover { background: #f0ebe1; color: #0f0f0f; }
+    .impulse-row { display: flex; gap: 8px; margin-top: 10px; }
+    .impulse-btn { border: 1.5px solid #2a2a2a; background: none; cursor: pointer; border-radius: 10px; padding: 8px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: #888; transition: all 0.18s; flex: 1; }
+    .impulse-btn.sel { border-color: #f87171; background: rgba(248,113,113,0.08); color: #f87171; }
+    .impulse-btn.sel-no { border-color: #4ade80; background: rgba(74,222,128,0.08); color: #4ade80; }
+    .shop-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #1e1e1e; }
+    .shop-item:last-child { border-bottom: none; }
+    .shop-item-info { flex: 1; }
+    .shop-item-name { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #f0ebe1; margin-bottom: 3px; }
+    .shop-item-meta { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; }
+    .shop-item-right { display: flex; align-items: center; gap: 10px; }
+    .shop-item-amount { font-family: 'DM Sans', sans-serif; font-size: 14px; font-style: italic; }
+    .shop-delete { background: none; border: none; color: #444; cursor: pointer; font-size: 16px; padding: 4px; }
+    .shop-delete:hover { color: #f87171; }
+    .shop-total { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; margin-top: 4px; border-top: 1px solid #2a2a2a; }
+    .shop-total-label { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #666; }
+    .shop-total-amount { font-size: 20px; font-style: italic; color: #f87171; }
+    .shop-empty { font-family: 'DM Sans', sans-serif; font-size: 13px; color: #444; text-align: center; padding: 20px 0; }
+    .section-title { font-size: 18px; font-style: italic; margin-bottom: 2px; }
+    .section-sub { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #555; }
+    .impulse-tag { font-size: 11px; padding: 2px 8px; border-radius: 100px; font-family: 'DM Sans', sans-serif; }
+    .impulse-tag.yes { background: rgba(248,113,113,0.15); color: #f87171; }
+    .impulse-tag.no { background: rgba(74,222,128,0.1); color: #4ade80; }
   </style>
 </head>
 <body>
@@ -92,9 +123,10 @@
     <span class="subtitle">diario personal</span>
   </div>
   <div class="nav">
-    <button class="nav-btn active" onclick="setView('today')">Hoy</button>
-    <button class="nav-btn" onclick="setView('calendar')">Calendario</button>
-    <button class="nav-btn" onclick="setView('stats')">Stats</button>
+    <button class="nav-btn active" data-view="today">Hoy</button>
+    <button class="nav-btn" data-view="calendar">Calendario</button>
+    <button class="nav-btn" data-view="shopping">Compras</button>
+    <button class="nav-btn" data-view="stats">Stats</button>
   </div>
 </div>
 
@@ -106,7 +138,6 @@
       <div class="day-date" id="today-date"></div>
       <div class="day-title">¿Cómo fue tu día?</div>
     </div>
-
     <div class="card">
       <div class="card-label">Evaluación general</div>
       <div class="good-day-row">
@@ -114,14 +145,11 @@
         <button class="good-day-btn" id="btn-bad" onclick="setGoodDay(false)">Día difícil</button>
       </div>
     </div>
-
     <div id="habits-container"></div>
-
     <div>
       <div class="note-label">📝 Notas del día</div>
       <textarea id="note-input" rows="4" placeholder="¿Algo que quieras recordar de hoy?" oninput="saveNote(this.value)"></textarea>
     </div>
-
     <button class="save-btn" id="save-btn" onclick="handleSave()">Guardar día</button>
   </div>
 
@@ -137,6 +165,62 @@
       <div style="display:flex;align-items:center;gap:6px"><div class="legend-dot" style="background:#4ade80"></div>Buen día</div>
       <div style="display:flex;align-items:center;gap:6px"><div class="legend-dot" style="background:#fbbf24"></div>Regular</div>
       <div style="display:flex;align-items:center;gap:6px"><div class="legend-dot" style="background:#f87171"></div>Difícil</div>
+    </div>
+  </div>
+
+  <!-- SHOPPING -->
+  <div id="view-shopping" class="view">
+    <div>
+      <div class="section-title">Control de compras</div>
+      <div class="section-sub">Registra tus compras de shopping y fast fashion</div>
+    </div>
+
+    <!-- Add purchase -->
+    <div class="card">
+      <div class="card-label">Registrar compra</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div>
+          <div class="field-label">¿Qué compraste?</div>
+          <input type="text" id="shop-name" placeholder="Ej. blusa, zapatillas, bolsa..." />
+        </div>
+        <div class="shop-add-row">
+          <div>
+            <div class="field-label">Monto ($)</div>
+            <input type="number" id="shop-amount" placeholder="0.00" min="0" />
+          </div>
+          <div>
+            <div class="field-label">Tienda / Marca</div>
+            <input type="text" id="shop-brand" placeholder="Zara, Shein..." />
+          </div>
+        </div>
+        <div>
+          <div class="field-label">¿Fue una compra impulsiva?</div>
+          <div class="impulse-row">
+            <button class="impulse-btn" id="imp-yes" onclick="setImpulse(true)">😬 Sí, fue impulsiva</button>
+            <button class="impulse-btn" id="imp-no" onclick="setImpulse(false)">✓ No, la planeé</button>
+          </div>
+        </div>
+        <div>
+          <div class="field-label">Nota (opcional)</div>
+          <input type="text" id="shop-note" placeholder="¿Por qué la compraste?" />
+        </div>
+        <button class="add-btn" onclick="addPurchase()">+ Agregar compra</button>
+      </div>
+    </div>
+
+    <!-- Purchase list -->
+    <div class="card">
+      <div class="card-label">Historial de compras</div>
+      <div id="shop-filter-row" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="impulse-btn" id="filter-all" onclick="setFilter('all')" style="flex:none;padding:6px 14px">Todas</button>
+        <button class="impulse-btn" id="filter-impulse" onclick="setFilter('impulse')" style="flex:none;padding:6px 14px">Impulsivas</button>
+        <button class="impulse-btn" id="filter-planned" onclick="setFilter('planned')" style="flex:none;padding:6px 14px">Planeadas</button>
+      </div>
+      <div id="shop-list"></div>
+      <div id="shop-total-row" class="shop-total" style="display:none">
+        <span class="shop-total-label">Total gastado</span>
+        <span class="shop-total-amount" id="shop-total-amount"></span>
+      </div>
     </div>
   </div>
 
@@ -161,6 +245,22 @@
     <div class="card" id="stat-habits-card" style="display:none">
       <div class="card-label">Promedio por hábito</div>
       <div id="habits-bars"></div>
+    </div>
+    <!-- Shopping stats -->
+    <div class="card" id="stat-shop-card" style="display:none">
+      <div class="card-label">💳 Resumen de compras</div>
+      <div class="stat-row" style="margin-bottom:16px">
+        <div class="stat-card"><div class="stat-label">Total compras</div><div class="stat-num" id="stat-shop-count" style="color:#f0ebe1">0</div></div>
+        <div class="stat-card"><div class="stat-label">Impulsivas</div><div class="stat-num" id="stat-shop-impulse" style="color:#f87171">0</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:#888">Total gastado</span>
+        <span id="stat-shop-total" style="font-size:20px;font-style:italic;color:#f87171"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:#888">% impulsivas</span>
+        <span id="stat-shop-impulse-pct" style="font-family:'DM Sans',sans-serif;font-size:14px;color:#fbbf24"></span>
+      </div>
     </div>
     <div class="empty-msg" id="stats-empty">Aún no hay datos.<br>¡Registra tu primer día!</div>
   </div>
@@ -187,8 +287,8 @@ const HABITS = [
   { id: "exercise", label: "Ejercicio", icon: "🏃", options: ["Sí, intenso", "Sí, ligero", "No hice"] },
   { id: "water", label: "Hidratación", icon: "💧", options: ["Muy bien", "Regular", "Poca agua"] },
   { id: "sleep", label: "Sueño", icon: "😴", options: ["+8 hrs", "6-8 hrs", "-6 hrs"] },
-  { id: "mind", label: "Bienestar mental", icon: "🧠", options: ["Tranquilo", "Normal", "Estresado"] },{ id: "junk", label: "Papitas & Coca", icon: "🍟", options: ["Nada 🙌", "Un poco", "Me pasé 😅"] },
-
+  { id: "mind", label: "Bienestar mental", icon: "🧠", options: ["Tranquilo", "Normal", "Estresado"] },
+  { id: "junk", label: "Papitas & Coca", icon: "🍟", options: ["Nada 🙌", "Un poco", "Me pasé 😅"] },
 ];
 const SCORE_MAP = [3, 2, 1];
 const DAY_NAMES = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
@@ -196,14 +296,19 @@ const MONTH_NAMES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","A
 const COLORS = ["#4ade80","#fbbf24","#f87171"];
 
 let data = {};
+let purchases = [];
 try { data = JSON.parse(localStorage.getItem("habitData") || "{}"); } catch(e) {}
+try { purchases = JSON.parse(localStorage.getItem("purchaseData") || "[]"); } catch(e) {}
 
 const now = new Date();
 const todayKey = getDayKey(now);
 let calYear = now.getFullYear(), calMonth = now.getMonth();
+let newImpulse = null;
+let shopFilter = "all";
 
 function getDayKey(d) { return d.toISOString().split("T")[0]; }
 function saveAll() { localStorage.setItem("habitData", JSON.stringify(data)); }
+function savePurchases() { localStorage.setItem("purchaseData", JSON.stringify(purchases)); }
 function getEntry() { return data[todayKey] || (data[todayKey] = { habits: {}, note: "", goodDay: null }); }
 
 function getScore(entry) {
@@ -217,24 +322,17 @@ function getDayColor(entry) {
 }
 
 // NAV
-function setView(v) {
-  document.querySelectorAll(".view").forEach(el => el.classList.remove("active"));
-  document.querySelectorAll(".nav-btn").forEach(el => el.classList.remove("active"));
-  document.getElementById("view-" + v).classList.add("active");
-  document.querySelectorAll(".nav-btn").forEach(el => { if (el.textContent.toLowerCase().includes(v === "today" ? "hoy" : v === "calendar" ? "cal" : "stat")) el.classList.add("active"); });
-  if (v === "calendar") renderCalendar();
-  if (v === "stats") renderStats();
-}
-document.querySelectorAll(".nav-btn").forEach((btn, i) => {
-  const views = ["today", "calendar", "stats"];
-  btn.onclick = () => {
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const v = btn.dataset.view;
     document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     document.querySelectorAll(".view").forEach(el => el.classList.remove("active"));
-    document.getElementById("view-" + views[i]).classList.add("active");
-    if (views[i] === "calendar") renderCalendar();
-    if (views[i] === "stats") renderStats();
-  };
+    document.getElementById("view-" + v).classList.add("active");
+    if (v === "calendar") renderCalendar();
+    if (v === "stats") renderStats();
+    if (v === "shopping") renderShopList();
+  });
 });
 
 // TODAY
@@ -242,8 +340,7 @@ document.getElementById("today-date").textContent = now.toLocaleDateString("es-M
 
 function renderHabits() {
   const entry = getEntry();
-  const container = document.getElementById("habits-container");
-  container.innerHTML = HABITS.map(h => `
+  document.getElementById("habits-container").innerHTML = HABITS.map(h => `
     <div class="card">
       <div class="habit-label"><span style="margin-right:8px">${h.icon}</span>${h.label}</div>
       <div class="options-row">
@@ -270,11 +367,7 @@ function setGoodDay(val) {
   document.getElementById("btn-bad").className = "good-day-btn" + (val === false ? " sel-no" : "");
 }
 
-function saveNote(val) {
-  const entry = getEntry();
-  entry.note = val;
-  saveAll();
-}
+function saveNote(val) { const entry = getEntry(); entry.note = val; saveAll(); }
 
 function handleSave() {
   const btn = document.getElementById("save-btn");
@@ -283,11 +376,10 @@ function handleSave() {
   setTimeout(() => { btn.textContent = "Guardar día"; btn.classList.remove("saved"); }, 1200);
 }
 
-// Init today
 (function initToday() {
   const entry = getEntry();
-  if (entry.goodDay === true) { document.getElementById("btn-good").classList.add("sel-yes"); }
-  if (entry.goodDay === false) { document.getElementById("btn-bad").classList.add("sel-no"); }
+  if (entry.goodDay === true) document.getElementById("btn-good").classList.add("sel-yes");
+  if (entry.goodDay === false) document.getElementById("btn-bad").classList.add("sel-no");
   document.getElementById("note-input").value = entry.note || "";
   renderHabits();
 })();
@@ -334,6 +426,78 @@ function openModal(key) {
 }
 function closeModal() { document.getElementById("modal").style.display = "none"; }
 
+// SHOPPING
+function setImpulse(val) {
+  newImpulse = val;
+  document.getElementById("imp-yes").className = "impulse-btn" + (val === true ? " sel" : "");
+  document.getElementById("imp-no").className = "impulse-btn" + (val === false ? " sel-no" : "");
+}
+
+function addPurchase() {
+  const name = document.getElementById("shop-name").value.trim();
+  const amount = parseFloat(document.getElementById("shop-amount").value) || 0;
+  const brand = document.getElementById("shop-brand").value.trim();
+  const note = document.getElementById("shop-note").value.trim();
+  if (!name) { alert("Escribe qué compraste"); return; }
+  purchases.unshift({ id: Date.now(), date: todayKey, name, amount, brand, note, impulse: newImpulse });
+  savePurchases();
+  document.getElementById("shop-name").value = "";
+  document.getElementById("shop-amount").value = "";
+  document.getElementById("shop-brand").value = "";
+  document.getElementById("shop-note").value = "";
+  newImpulse = null;
+  document.getElementById("imp-yes").className = "impulse-btn";
+  document.getElementById("imp-no").className = "impulse-btn";
+  renderShopList();
+}
+
+function deletePurchase(id) {
+  purchases = purchases.filter(p => p.id !== id);
+  savePurchases();
+  renderShopList();
+}
+
+function setFilter(f) {
+  shopFilter = f;
+  document.querySelectorAll("#shop-filter-row .impulse-btn").forEach(b => b.classList.remove("sel", "sel-no"));
+  document.getElementById("filter-" + f).classList.add(f === "impulse" ? "sel" : f === "planned" ? "sel-no" : "sel-no");
+  renderShopList();
+}
+
+function renderShopList() {
+  let filtered = purchases;
+  if (shopFilter === "impulse") filtered = purchases.filter(p => p.impulse === true);
+  if (shopFilter === "planned") filtered = purchases.filter(p => p.impulse === false);
+
+  const total = filtered.reduce((s, p) => s + (p.amount || 0), 0);
+  const listEl = document.getElementById("shop-list");
+  const totalRow = document.getElementById("shop-total-row");
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<div class="shop-empty">No hay compras registradas aún 🛍️</div>`;
+    totalRow.style.display = "none";
+    return;
+  }
+
+  listEl.innerHTML = filtered.map(p => {
+    const date = new Date(p.date + "T12:00:00").toLocaleDateString("es-MX", { day: "numeric", month: "short" });
+    const impulseTag = p.impulse === true ? `<span class="impulse-tag yes">Impulsiva</span>` : p.impulse === false ? `<span class="impulse-tag no">Planeada</span>` : "";
+    return `<div class="shop-item">
+      <div class="shop-item-info">
+        <div class="shop-item-name">${p.name} ${impulseTag}</div>
+        <div class="shop-item-meta">${date}${p.brand ? " · " + p.brand : ""}${p.note ? " · " + p.note : ""}</div>
+      </div>
+      <div class="shop-item-right">
+        ${p.amount ? `<span class="shop-item-amount" style="color:${p.impulse ? '#f87171' : '#f0ebe1'}">$${p.amount.toLocaleString("es-MX", {minimumFractionDigits: 0})}</span>` : ""}
+        <button class="shop-delete" onclick="deletePurchase(${p.id})">×</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  totalRow.style.display = "flex";
+  document.getElementById("shop-total-amount").textContent = "$" + total.toLocaleString("es-MX", { minimumFractionDigits: 0 });
+}
+
 // STATS
 function renderStats() {
   const entries = Object.entries(data);
@@ -351,27 +515,48 @@ function renderStats() {
   const empty = document.getElementById("stats-empty");
   const progressCard = document.getElementById("stat-progress-card");
   const habitsCard = document.getElementById("stat-habits-card");
+  const shopCard = document.getElementById("stat-shop-card");
 
-  if (entries.length === 0) {
-    empty.style.display = "block"; progressCard.style.display = "none"; habitsCard.style.display = "none"; return;
+  if (entries.length === 0 && purchases.length === 0) {
+    empty.style.display = "block"; progressCard.style.display = "none"; habitsCard.style.display = "none"; shopCard.style.display = "none"; return;
   }
-  empty.style.display = "none"; progressCard.style.display = "block"; habitsCard.style.display = "block";
+  empty.style.display = "none";
 
-  const pct = Math.round(good / entries.length * 100);
-  document.getElementById("progress-fill").style.width = pct + "%";
-  document.getElementById("progress-pct").textContent = pct + "%";
+  if (entries.length > 0) {
+    progressCard.style.display = "block"; habitsCard.style.display = "block";
+    const pct = Math.round(good / entries.length * 100);
+    document.getElementById("progress-fill").style.width = pct + "%";
+    document.getElementById("progress-pct").textContent = pct + "%";
+    document.getElementById("habits-bars").innerHTML = HABITS.map(h => {
+      const vals = entries.map(([,e]) => e.habits[h.id]).filter(v => v !== undefined);
+      const avg = vals.length ? vals.reduce((a,b) => a + SCORE_MAP[b], 0) / vals.length / 3 : 0;
+      const p = Math.round(avg * 100);
+      const col = avg > 0.66 ? "#4ade80" : avg > 0.33 ? "#fbbf24" : "#f87171";
+      return `<div class="habit-bar">
+        <div class="habit-bar-top"><span class="habit-bar-label">${h.icon} ${h.label}</span><span class="habit-bar-pct" style="color:${col}">${p}%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${p}%;background:${col}"></div></div>
+      </div>`;
+    }).join("");
+  }
 
-  document.getElementById("habits-bars").innerHTML = HABITS.map(h => {
-    const vals = entries.map(([,e]) => e.habits[h.id]).filter(v => v !== undefined);
-    const avg = vals.length ? vals.reduce((a,b) => a + SCORE_MAP[b], 0) / vals.length / 3 : 0;
-    const p = Math.round(avg * 100);
-    const col = avg > 0.66 ? "#4ade80" : avg > 0.33 ? "#fbbf24" : "#f87171";
-    return `<div class="habit-bar">
-      <div class="habit-bar-top"><span class="habit-bar-label">${h.icon} ${h.label}</span><span class="habit-bar-pct" style="color:${col}">${p}%</span></div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${p}%;background:${col}"></div></div>
-    </div>`;
-  }).join("");
+  if (purchases.length > 0) {
+    shopCard.style.display = "block";
+    const impulseCount = purchases.filter(p => p.impulse === true).length;
+    const totalSpent = purchases.reduce((s, p) => s + (p.amount || 0), 0);
+    const impulsePct = Math.round(impulseCount / purchases.length * 100);
+    document.getElementById("stat-shop-count").textContent = purchases.length;
+    document.getElementById("stat-shop-impulse").textContent = impulseCount;
+    document.getElementById("stat-shop-total").textContent = "$" + totalSpent.toLocaleString("es-MX", { minimumFractionDigits: 0 });
+    document.getElementById("stat-shop-impulse-pct").textContent = impulsePct + "% impulsivas";
+  } else {
+    shopCard.style.display = "none";
+  }
 }
+
+// Init filter
+setFilter("all");
 </script>
 </body>
 </html>
+
+    
